@@ -3,8 +3,8 @@ unit MainForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, System.Diagnostics,
-   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+   System.Diagnostics, System.Threading, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TForm1 = class(TForm)
@@ -34,11 +34,17 @@ type
     property TimeRun: String read FTimeRun write SetTimeRun;
   end;
 
+  TViewThread = class(TThread)
+  protected
+    procedure Execute; override;
+  end;
+
 var
   Form1: TForm1;
   NumSeq1 : TArray<Double>;
   //NumSeq2 : TArray<Double>;
   TempList: TStrings;
+  ViewThread: TViewThread;
 
 implementation
 
@@ -50,18 +56,26 @@ begin
   LengthSeq := 0;
 end;
 
+procedure TViewThread.Execute;
+begin
+  while not Terminated do
+  begin
+    Form1.UpdateListBoxs;
+    if Terminated then
+      Break;
+  end;
+
+end;
+
 procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
 begin
   NumSeq1 := nil;
-  //NumSeq2 := nil;
   SetLength(NumSeq1, LengthSeq);
-  //SetLength(NumSeq2, LengthSeq);
   var Temp: Double;
   for var I := 0 to LengthSeq-1 do
   begin
     Temp := Random*10000;
     NumSeq1[I] := Temp;
-    //NumSeq2[I] := Temp;
     //ShowMessage(FloatToStr(Temp));
   end;
   UpdateListBoxs;
@@ -70,14 +84,17 @@ end;
 procedure TForm1.UpdateListBoxs;
 var
   I : Integer;
+  TempList : TStrings;
 begin
-  LBSeq1.Clear;
-  //LBSeq2.Clear;
+  TempList := TStringList.Create;
+  LBSeq1.Items.BeginUpdate;
   for I := 0 to LengthSeq-1 do
   begin
-    LBSeq1.Items.Add(FloatToStr(NumSeq1[I]));
-    //Seq2.Items.Add(FloatToStr(NumSeq2[I]));
+    TempList.Add(FloatToStr(NumSeq1[I]))
   end;
+  LBSeq1.Clear;
+  LBSeq1.Items.Assign(TempList);
+  LBSeq1.Items.EndUpdate;
 end;
 
 procedure TForm1.qSort(var A: TArray<Double>; min, max: Integer);
@@ -107,9 +124,13 @@ var
   Stopwatch: TStopwatch;
 begin
   Stopwatch := TStopwatch.Create;
+  //ViewThread := TViewThread.Create(False);
+  //ViewThread.FreeOnTerminate := True;
+  //ViewThread.Start;
   Stopwatch.Start;
   qSort(NumSeq1, 0, High(NumSeq1));
   Stopwatch.Stop;
+  //ViewThread.Free;
   TimeRun := Stopwatch.ElapsedMilliseconds.ToString;
 end;
 
