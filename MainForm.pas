@@ -13,6 +13,9 @@ type
     EditLengthSeq: TEdit;
     LabelLengthSeq: TLabel;
     BtnGenerateSeq: TButton;
+    procedure EditLengthSeqChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BtnGenerateSeqClick(Sender: TObject);
   private
     FLengthSeq: Integer;
     procedure SetLengthSeq(const Value: Integer);
@@ -28,6 +31,34 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  FLengthSeq := -1;
+  LengthSeq := 0;
+end;
+
+procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
+begin
+  NumSeq1 := nil;
+  NumSeq2 := nil;
+  SetLength(NumSeq1, LengthSeq);
+  SetLength(NumSeq2, LengthSeq);
+  var Temp: Double;
+  for var I := 0 to LengthSeq-1 do
+  begin
+    Temp := Random*10000;
+    NumSeq1[I] := Temp;
+    NumSeq2[I] := Temp;
+    ShowMessage(FloatToStr(Temp));
+  end;
+
+end;
+
+procedure TForm1.EditLengthSeqChange(Sender: TObject);
+begin
+  LengthSeq := StrToInt(EditLengthSeq.Text);
+end;
 
 procedure TForm1.SetLengthSeq(const Value: Integer);
 begin

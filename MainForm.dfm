@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'SortNumSequence'
   ClientHeight = 570
   ClientWidth = 762
   Color = clBtnFace
@@ -10,6 +10,7 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
   TextHeight = 15
   object PanelToolBar: TPanel
     Left = 0
@@ -54,6 +55,7 @@ object Form1: TForm1
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        OnChange = EditLengthSeqChange
       end
       object BtnGenerateSeq: TButton
         Left = 18
@@ -68,6 +70,7 @@ object Form1: TForm1
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnClick = BtnGenerateSeqClick
       end
     end
   end
