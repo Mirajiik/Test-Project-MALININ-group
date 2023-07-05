@@ -74,4 +74,35 @@ object Form1: TForm1
       end
     end
   end
+  object PanelLBs: TPanel
+    Left = 0
+    Top = 0
+    Width = 762
+    Height = 450
+    Align = alClient
+    TabOrder = 1
+    ExplicitLeft = 408
+    ExplicitTop = 264
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object LBSeq1: TListBox
+      Left = 1
+      Top = 1
+      Width = 360
+      Height = 448
+      Align = alLeft
+      ItemHeight = 15
+      TabOrder = 0
+    end
+    object LBSeq2: TListBox
+      Left = 401
+      Top = 1
+      Width = 360
+      Height = 448
+      Align = alRight
+      ItemHeight = 15
+      TabOrder = 1
+      ExplicitLeft = 640
+    end
+  end
 end
