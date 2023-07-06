@@ -14,18 +14,18 @@ object Form1: TForm1
   TextHeight = 15
   object PanelToolBar: TPanel
     Left = 0
-    Top = 459
+    Top = 419
     Width = 521
-    Height = 120
+    Height = 160
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 458
+    ExplicitTop = 418
     ExplicitWidth = 517
     object PanelGenerateSeq: TPanel
       Left = 1
       Top = 1
       Width = 180
-      Height = 118
+      Height = 158
       Align = alLeft
       TabOrder = 0
       object LabelLengthSeq: TLabel
@@ -44,20 +44,6 @@ object Form1: TForm1
         WordWrap = True
         ExplicitWidth = 150
       end
-      object EditLengthSeq: TEdit
-        Left = 0
-        Top = 43
-        Width = 180
-        Height = 33
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        OnChange = EditLengthSeqChange
-      end
       object BtnGenerateSeq: TButton
         Left = 18
         Top = 85
@@ -70,15 +56,32 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         OnClick = BtnGenerateSeqClick
+      end
+      object EditLengthSeq: TSpinEdit
+        Left = 1
+        Top = 44
+        Width = 178
+        Height = 35
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        MaxValue = 100000
+        MinValue = 1
+        ParentFont = False
+        TabOrder = 1
+        Value = 1
+        OnChange = EditLengthSeqChange
       end
     end
     object GBToolBarBubbleSort: TGroupBox
       Left = 360
       Top = 1
       Width = 160
-      Height = 118
+      Height = 158
       Align = alRight
       Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' "'#1055#1091#1079#1099#1088#1100#1082#1086#1084'"'
       Font.Charset = DEFAULT_CHARSET
@@ -91,7 +94,7 @@ object Form1: TForm1
       ExplicitLeft = 356
       object LabelBSTimeAndProgress: TLabel
         Left = 2
-        Top = 91
+        Top = 131
         Width = 156
         Height = 25
         Align = alBottom
@@ -106,10 +109,10 @@ object Form1: TForm1
       end
       object BtnBubbleSortSeq: TButton
         Left = 4
-        Top = 45
+        Top = 24
         Width = 140
-        Height = 40
-        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072
+        Height = 52
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1086#1079#1088#1072#1089#1090#1072#1085#1080#1102
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -117,6 +120,24 @@ object Form1: TForm1
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        WordWrap = True
+        OnClick = BtnBubbleSortSeqClick
+      end
+      object BtnReverseBubbleSortSeq: TButton
+        Tag = 1
+        Left = 4
+        Top = 82
+        Width = 140
+        Height = 52
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1073#1099#1074#1072#1085#1080#1102
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        WordWrap = True
         OnClick = BtnBubbleSortSeqClick
       end
     end
@@ -124,7 +145,7 @@ object Form1: TForm1
       Left = 200
       Top = 1
       Width = 160
-      Height = 118
+      Height = 158
       Align = alRight
       Caption = '"'#1041#1099#1089#1090#1088#1072#1103'" '#1089#1086#1088#1090#1080#1088#1086#1074#1082#1072
       Font.Charset = DEFAULT_CHARSET
@@ -137,7 +158,7 @@ object Form1: TForm1
       ExplicitLeft = 196
       object LabelQSTimeAndProgress: TLabel
         Left = 2
-        Top = 91
+        Top = 131
         Width = 156
         Height = 25
         Align = alBottom
@@ -152,10 +173,10 @@ object Form1: TForm1
       end
       object BtnQuickSortSeq: TButton
         Left = 3
-        Top = 45
+        Top = 24
         Width = 140
-        Height = 40
-        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072
+        Height = 52
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1086#1079#1088#1072#1089#1090#1072#1085#1080#1102
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -166,13 +187,30 @@ object Form1: TForm1
         WordWrap = True
         OnClick = BtnQuickSortSeqClick
       end
+      object BtnReverseQuickSortSeq: TButton
+        Tag = 1
+        Left = 3
+        Top = 82
+        Width = 140
+        Height = 52
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1073#1099#1074#1072#1085#1080#1102
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        WordWrap = True
+        OnClick = BtnQuickSortSeqClick
+      end
     end
   end
   object LBSeq1: TListBox
     Left = 0
     Top = 0
     Width = 200
-    Height = 459
+    Height = 419
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -182,13 +220,13 @@ object Form1: TForm1
     ItemHeight = 21
     ParentFont = False
     TabOrder = 1
-    ExplicitHeight = 458
+    ExplicitHeight = 418
   end
   object ChartSortProgress: TChart
     Left = 200
     Top = 0
     Width = 321
-    Height = 459
+    Height = 419
     Legend.Visible = False
     Title.Text.Strings = (
       #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)
@@ -197,7 +235,7 @@ object Form1: TForm1
     AutoSize = True
     TabOrder = 2
     ExplicitWidth = 317
-    ExplicitHeight = 458
+    ExplicitHeight = 418
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
     object Series1: TBarSeries

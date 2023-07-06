@@ -6,13 +6,12 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Math,
   System.Diagnostics, System.Threading, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.ExtCtrls, Vcl.StdCtrls, SortUnit, VclTee.TeeGDIPlus, VCLTee.TeEngine,
-  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series;
+  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series, Vcl.Samples.Spin;
 
 type
   TForm1 = class(TForm)
     PanelToolBar: TPanel;
     PanelGenerateSeq: TPanel;
-    EditLengthSeq: TEdit;
     LabelLengthSeq: TLabel;
     BtnGenerateSeq: TButton;
     GBToolBarBubbleSort: TGroupBox;
@@ -24,6 +23,9 @@ type
     Series1: TBarSeries;
     BtnBubbleSortSeq: TButton;
     LabelBSTimeAndProgress: TLabel;
+    BtnReverseQuickSortSeq: TButton;
+    BtnReverseBubbleSortSeq: TButton;
+    EditLengthSeq: TSpinEdit;
     procedure EditLengthSeqChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnGenerateSeqClick(Sender: TObject);
@@ -60,10 +62,12 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  FLengthSeq := -1;
-  LengthSeq := 0;
+  FLengthSeq := 0;
+  LengthSeq := 1;
   BtnQuickSortSeq.Enabled := False;
   BtnBubbleSortSeq.Enabled := False;
+  BtnReverseQuickSortSeq.Enabled := False;
+  BtnReverseBubbleSortSeq.Enabled := False;
   Series1.Clear;
 end;
 
@@ -72,6 +76,8 @@ begin
   NumSeq1 := nil;
   BtnQuickSortSeq.Enabled := True;
   BtnBubbleSortSeq.Enabled := True;
+  BtnReverseQuickSortSeq.Enabled := True;
+  BtnReverseBubbleSortSeq.Enabled := True;
   SetLength(NumSeq1, LengthSeq);
   var Temp: Double;
   for var I := 0 to LengthSeq-1 do
@@ -106,7 +112,7 @@ var
 begin
   Stopwatch := TStopwatch.Create;
   Stopwatch.Start;
-  Sort.qSort(NumSeq1, 0, High(NumSeq1));
+  Sort.qSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
   Stopwatch.Stop;
   QSTimeRun := Stopwatch.ElapsedMilliseconds;
 end;
@@ -117,14 +123,14 @@ var
 begin
   Stopwatch := TStopwatch.Create;
   Stopwatch.Start;
-  Sort.BubbleSort(NumSeq1, 0, High(NumSeq1));
+  Sort.BubbleSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
   Stopwatch.Stop;
   BSTimeRun := Stopwatch.ElapsedMilliseconds;
 end;
 
 procedure TForm1.EditLengthSeqChange(Sender: TObject);
 begin
-  LengthSeq := StrToInt(EditLengthSeq.Text);
+  LengthSeq := EditLengthSeq.Value;
 end;
 
 procedure TForm1.SetLengthSeq(const Value: Integer);
@@ -132,7 +138,7 @@ begin
   if FLengthSeq <> Value then
   begin
     FLengthSeq := Value;
-    EditLengthSeq.Text := IntToStr(FLengthSeq);
+    EditLengthSeq.Value := FLengthSeq;
   end;
 end;
 
