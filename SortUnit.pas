@@ -5,6 +5,7 @@ interface
   type TSort = class
     private
       procedure SiftDown(var A: System.TArray<Double>; i, j: Integer; reverse: Boolean);
+      procedure Swap<T>(var A, B: T);
     protected
     public
       procedure qSort(var A: TArray<Double>; min, max: Integer; reverse: Boolean);
@@ -15,10 +16,21 @@ implementation
 
 uses MainForm;
 
+procedure TSort.Swap<T>(var A, B: T);
+var
+  Temp: T;
+begin
+  Temp := A;
+  A := B;
+  B := Temp;
+  Form1.UpdateView;
+end;
+
+
 procedure TSort.qSort(var A: TArray<Double>; min, max: Integer; reverse: Boolean);
 var
   i, j: Integer;
-  supp, tmp: Double;
+  supp: Double;
 begin
 supp:=A[max-((max-min) div 2)];
 i:=min; j:=max;
@@ -36,10 +48,8 @@ while i<j do
     end;
     if i<=j then
       begin
-        tmp:=A[i]; A[i]:=A[j]; A[j]:=tmp;
+        Swap(A[i], A[j]);
         i:=i+1; j:=j-1;
-        Form1.UpdateView;
-        //Form1.ProgressQSort := 100 - (j - i) / (max - min) * 100;
       end;
     Form1.ProgressQSort := min / max * 100;
     end
@@ -54,11 +64,10 @@ while i<j do
       j:=j-1;
     end;
     if i<=j then
-      begin
-        tmp:=A[i]; A[i]:=A[j]; A[j]:=tmp;
-        i:=i+1; j:=j-1;
-        Form1.UpdateView;
-      end;
+    begin
+      Swap(A[i], A[j]);
+      i:=i+1; j:=j-1;
+    end;
     Form1.ProgressQSort := i / max * 100;
     end;
   end;
@@ -91,7 +100,6 @@ procedure TSort.PyramidSort(var A: System.TArray<Double>; min, max: Integer;
   reverse: Boolean);
 var
   i: Integer;
-  tmp: Double;
 begin
   Form1.ProgressPSort := 0;
   for I := max div 2 downto min do
@@ -100,8 +108,7 @@ begin
   end;
   for I := max downto min + 1 do
   begin
-    tmp := A[0]; A[0] := A[i]; A[i] := tmp;
-    Form1.UpdateView;
+    Swap(A[i], A[0]);
     SiftDown(A, 0, i, reverse);
     Form1.ProgressPSort := (max - i) / (max - min) * 100;
   end;
@@ -113,7 +120,6 @@ procedure TSort.SiftDown(var A: System.TArray<Double>; i, j: Integer;
 var
   done: Boolean;
   maxChild: Integer;
-  tmp: Double;
 begin
   done := False;
   while (i * 2 + 1 < j) and not done do
@@ -132,13 +138,11 @@ begin
     end;
     if A[i] < A[maxChild] = not reverse then
     begin
-      tmp := A[i]; A[i] := A[maxChild]; A[maxChild] := tmp;
-      Form1.UpdateView;
+      Swap(A[i], A[maxChild]);
       i := maxChild;
     end
     else
       done := True;
   end;
 end;
-
 end.
