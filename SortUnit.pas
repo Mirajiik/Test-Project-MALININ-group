@@ -2,147 +2,179 @@ unit SortUnit;
 
 interface
 
-  type TSort = class
-    private
-      procedure SiftDown(var A: System.TArray<Double>; i, j: Integer; reverse: Boolean);
-      procedure Swap<T>(var A, B: T);
-    protected
-    public
-      procedure qSort(var A: TArray<Double>; min, max: Integer; reverse: Boolean);
-      //procedure BubbleSort(var A: System.TArray<Double>; min, max: Integer; reverse: Boolean);
-      procedure PyramidSort(var A: System.TArray<Double>; min, max: Integer; reverse: Boolean);
+uses System.Classes, Generics.Collections, System.Diagnostics;
+
+  type
+  TSortThread = class(TThread)
+  private
+    FArray: TArray<Double>;
+    FMin, FMax: Integer;
+    FReverse: Boolean;
+    FStopWatch : TStopWatch;
+    procedure Swap<T>(var A, B: T);
+  public
+    constructor Create(Values: TArray<Double>; Min, Max: Integer; Reverse: Boolean);
+    procedure Execute; override;
+    procedure Sort; virtual; abstract;
   end;
+  {TBubbleSort = class(TSortThread)
+    procedure Sort; override;
+  end;}
+  TQuickSort = class(TSortThread)
+    procedure Sort; override;
+  end;
+  THeapSort = class(TSortThread)
+    procedure Sort; override;
+  end;
+
 implementation
 
 uses MainForm;
 
-procedure TSort.Swap<T>(var A, B: T);
+constructor TSortThread.Create(Values: TArray<Double>; Min, Max: Integer; Reverse: Boolean);
+begin
+  FArray := Values;
+  FMin := Min;
+  FMax := Max;
+  FReverse := Reverse;
+  FStopWatch := TStopWatch.Create;
+  inherited Create(True);
+end;
+
+procedure TSortThread.Swap<T>(var A, B: T);
 var
   Temp: T;
 begin
   Temp := A;
   A := B;
   B := Temp;
-  Form1.UpdateView;
+  Synchronize(Form1.UpdateView);
 end;
 
-
-procedure TSort.qSort(var A: TArray<Double>; min, max: Integer; reverse: Boolean);
-var
-  i, j: Integer;
-  supp: Double;
+procedure TSortThread.Execute;
 begin
-supp:=A[max-((max-min) div 2)];
-i:=min; j:=max;
-while i<j do
+  Sort;
+end;
+
+// BubbleSort
+{procedure TBubbleSort.Sort;
+begin
+Form1.ProgressQSort := 0;
+for var i:= FMin to FMax-1 do
+begin
+  for var j := FMin to FMax - 1 - (i - FMin) do
   begin
-    if reverse then
+    if FArray[j] > FArray[j+1] = not FReverse then
     begin
-      while A[i]>supp do
-    begin
-      i:=i+1;
+      Swap(FArray[j], FArray[j+1]);
     end;
-    while A[j]<supp do
-    begin
-      j:=j-1;
-    end;
-    if i<=j then
+  end;
+  Form1.ProgressQSort := (i - FMin) / (FMax - FMin) * 100;
+  end;
+end;}
+
+{ TQuickSort }
+procedure TQuickSort.Sort;
+  procedure QuickSort(const min, max: Integer);
+  var
+    i, j: Integer;
+    supp: Double;
+  begin
+    supp:=FArray[max - ((max - min) div 2)];
+    i:=min; j:=max;
+    while i<j do
       begin
-        Swap(A[i], A[j]);
-        i:=i+1; j:=j-1;
+        if FReverse then
+        begin
+          while FArray[i]>supp do
+        begin
+          Inc(i);
+        end;
+        while FArray[j]<supp do
+        begin
+          Dec(j);
+        end;
+        if i<=j then
+          begin
+            Swap(FArray[i], FArray[j]);
+            Inc(i); Dec(j);
+          end;
+        end
+        else
+        begin
+          while FArray[i]<supp = not FReverse do
+        begin
+          Inc(i);
+        end;
+        while FArray[j]>supp = not FReverse do
+        begin
+          Dec(j);
+        end;
+        if i<=j then
+        begin
+          Swap(FArray[i], FArray[j]);
+          Inc(i); Dec(j);
+        end;
+        end;
       end;
-    Form1.ProgressQSort := min / max * 100;
-    end
-    else
-    begin
-      while A[i]<supp = not reverse do
-    begin
-      i:=i+1;
-    end;
-    while A[j]>supp = not reverse do
-    begin
-      j:=j-1;
-    end;
-    if i<=j then
-    begin
-      Swap(A[i], A[j]);
-      i:=i+1; j:=j-1;
-    end;
-    Form1.ProgressQSort := i / max * 100;
-    end;
+    if min<j then QuickSort(min, j);
+    if i<max then QuickSort(i, max);
   end;
-if min<j then qSort(A, min, j, reverse);
-if i<max then qSort(A, i, max, reverse);
+begin
+  FStopWatch.Start;
+  QuickSort(FMin, FMax);
+  FStopWatch.Stop;
+  Form1.QSTimeRun := FStopwatch.ElapsedMilliseconds;
 end;
 
-{
-procedure TSort.BubbleSort(var A: System.TArray<Double>; min, max: Integer; reverse: Boolean);
-var i, j: Integer;
-  tmp: Double;
-begin
-Form1.ProgressBSort := 0;
-for i:= min to max-1 do
-begin
-   for j := min to max - 1 - (i - min) do
-   begin
-     if A[j] > A[j+1] = not reverse then
-       begin
-         tmp := A[j]; A[j] := A[j+1]; A[j+1] := tmp;
-         Form1.UpdateView;
-       end;
-   end;
-   Form1.ProgressBSort := (i - min) / (max - min) * 100;
+{ THeapSort }
+procedure THeapSort.Sort;
+  procedure SiftDown(i, j: Integer);
+  var
+    done: Boolean;
+    maxChild: Integer;
+  begin
+    done := False;
+    while (i * 2 + 1 < j) and not done do
+    begin
+      if i * 2 + 1 = j - 1 then
+      begin
+        maxChild := i * 2 + 1
+      end
+      else if FArray[i * 2 + 1] > FArray[i * 2 + 2] = not FReverse then
+      begin
+        maxChild := i * 2 + 1;
+      end
+      else
+      begin
+        maxChild := i * 2 + 2;
+      end;
+      if FArray[i] < FArray[maxChild] = not FReverse then
+      begin
+        Swap(FArray[i], FArray[maxChild]);
+        i := maxChild;
+      end
+      else
+        done := True;
+    end;
   end;
-end;
-}
-
-procedure TSort.PyramidSort(var A: System.TArray<Double>; min, max: Integer;
-  reverse: Boolean);
 var
   i: Integer;
 begin
+  FStopWatch.Start;
   Form1.ProgressPSort := 0;
-  for I := max div 2 downto min do
+  for I := FMax div 2 downto FMin do
   begin
-    SiftDown(A, i, Length(A), reverse);
+    SiftDown(i, Length(FArray));
   end;
-  for I := max downto min + 1 do
+  for I := FMax downto FMin + 1 do
   begin
-    Swap(A[i], A[0]);
-    SiftDown(A, 0, i, reverse);
-    Form1.ProgressPSort := (max - i) / (max - min) * 100;
+    Swap(FArray[i], FArray[0]);
+    SiftDown(0, i);
+    Form1.ProgressPSort := (FMax - i) / (FMax - FMin) * 100;
   end;
+  FStopWatch.Stop;
+  Form1.PSTimeRun := FStopWatch.ElapsedMilliseconds;
 end;
 
-
-procedure TSort.SiftDown(var A: System.TArray<Double>; i, j: Integer;
-  reverse: Boolean);
-var
-  done: Boolean;
-  maxChild: Integer;
-begin
-  done := False;
-  while (i * 2 + 1 < j) and not done do
-  begin
-    if i * 2 + 1 = j - 1 then
-    begin
-      maxChild := i * 2 + 1
-    end
-    else if A[i * 2 + 1] > A[i * 2 + 2] = not reverse then
-    begin
-      maxChild := i * 2 + 1;
-    end
-    else
-    begin
-      maxChild := i * 2 + 2;
-    end;
-    if A[i] < A[maxChild] = not reverse then
-    begin
-      Swap(A[i], A[maxChild]);
-      i := maxChild;
-    end
-    else
-      done := True;
-  end;
-end;
 end.

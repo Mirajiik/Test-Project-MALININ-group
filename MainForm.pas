@@ -5,8 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Math,
   System.Diagnostics, System.Threading, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, Vcl.StdCtrls, SortUnit, VclTee.TeeGDIPlus, VCLTee.TeEngine,
-  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series, Vcl.Samples.Spin;
+  Vcl.ExtCtrls, Vcl.StdCtrls, SortUnit, VCLTee.TeEngine,
+  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series, Vcl.Samples.Spin,
+  VclTee.TeeGDIPlus;
 
 type
   TForm1 = class(TForm)
@@ -37,6 +38,7 @@ type
     FProgressQSort: Double;
     FPSTimeRun: Integer;
     FProgressPSort: Double;
+    SortThread: TSortThread;
     procedure SetLengthSeq(const Value: Integer);
     procedure SetQSTimeRun(const Value: Integer);
     procedure SetProgressQSort(const Value: Double);
@@ -54,7 +56,7 @@ var
   Form1: TForm1;
   NumSeq1 : TArray<Double>;
   TempList: TStrings;
-  Sort: TSort;
+  //Sort: TSort;
 
 implementation
 
@@ -107,25 +109,15 @@ begin
 end;
 
 procedure TForm1.BtnQuickSortSeqClick(Sender: TObject);
-var
-  Stopwatch: TStopwatch;
 begin
-  Stopwatch := TStopwatch.Create;
-  Stopwatch.Start;
-  Sort.qSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
-  Stopwatch.Stop;
-  QSTimeRun := Stopwatch.ElapsedMilliseconds;
+  SortThread := TQuickSort.Create(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
+  SortThread.Start;
 end;
 
 procedure TForm1.BtnPyramidSortSeqClick(Sender: TObject);
-var
-  Stopwatch: TStopwatch;
 begin
-  Stopwatch := TStopwatch.Create;
-  Stopwatch.Start;
-  Sort.PyramidSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
-  Stopwatch.Stop;
-  PSTimeRun := Stopwatch.ElapsedMilliseconds;
+  SortThread := THeapSort.Create(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
+  SortThread.Start;
 end;
 
 procedure TForm1.EditLengthSeqChange(Sender: TObject);
