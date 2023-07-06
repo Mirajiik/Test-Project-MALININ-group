@@ -21,34 +21,34 @@ type
     LBSeq1: TListBox;
     ChartSortProgress: TChart;
     Series1: TBarSeries;
-    BtnBubbleSortSeq: TButton;
+    BtnPyramidSortSeq: TButton;
     LabelBSTimeAndProgress: TLabel;
     BtnReverseQuickSortSeq: TButton;
-    BtnReverseBubbleSortSeq: TButton;
+    BtnReversePyramidSortSeq: TButton;
     EditLengthSeq: TSpinEdit;
     procedure EditLengthSeqChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnGenerateSeqClick(Sender: TObject);
     procedure BtnQuickSortSeqClick(Sender: TObject);
-    procedure BtnBubbleSortSeqClick(Sender: TObject);
+    procedure BtnPyramidSortSeqClick(Sender: TObject);
   private
     FLengthSeq: Integer;
     FQSTimeRun: Integer;
     FProgressQSort: Double;
-    FBSTimeRun: Integer;
-    FProgressBSort: Double;
+    FPSTimeRun: Integer;
+    FProgressPSort: Double;
     procedure SetLengthSeq(const Value: Integer);
     procedure SetQSTimeRun(const Value: Integer);
     procedure SetProgressQSort(const Value: Double);
-    procedure SetBSTimeRun(const Value: Integer);
-    procedure SetProgressBSort(const Value: Double);
+    procedure SetPSTimeRun(const Value: Integer);
+    procedure SetProgressPSort(const Value: Double);
   public
     procedure UpdateView;
     property LengthSeq: Integer read FLengthSeq write SetLengthSeq;
     property QSTimeRun: Integer read FQSTimeRun write SetQSTimeRun;
     property ProgressQSort: Double read FProgressQSort write SetProgressQSort;
-    property BSTimeRun: Integer read FBSTimeRun write SetBSTimeRun;
-    property ProgressBSort: Double read FProgressBSort write SetProgressBSort;
+    property PSTimeRun: Integer read FPSTimeRun write SetPSTimeRun;
+    property ProgressPSort: Double read FProgressPSort write SetProgressPSort;
   end;
 var
   Form1: TForm1;
@@ -65,9 +65,9 @@ begin
   FLengthSeq := 0;
   LengthSeq := 1;
   BtnQuickSortSeq.Enabled := False;
-  BtnBubbleSortSeq.Enabled := False;
+  BtnPyramidSortSeq.Enabled := False;
   BtnReverseQuickSortSeq.Enabled := False;
-  BtnReverseBubbleSortSeq.Enabled := False;
+  BtnReversePyramidSortSeq.Enabled := False;
   Series1.Clear;
 end;
 
@@ -75,9 +75,9 @@ procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
 begin
   NumSeq1 := nil;
   BtnQuickSortSeq.Enabled := True;
-  BtnBubbleSortSeq.Enabled := True;
+  BtnPyramidSortSeq.Enabled := True;
   BtnReverseQuickSortSeq.Enabled := True;
-  BtnReverseBubbleSortSeq.Enabled := True;
+  BtnReversePyramidSortSeq.Enabled := True;
   SetLength(NumSeq1, LengthSeq);
   var Temp: Double;
   for var I := 0 to LengthSeq-1 do
@@ -117,15 +117,15 @@ begin
   QSTimeRun := Stopwatch.ElapsedMilliseconds;
 end;
 
-procedure TForm1.BtnBubbleSortSeqClick(Sender: TObject);
+procedure TForm1.BtnPyramidSortSeqClick(Sender: TObject);
 var
   Stopwatch: TStopwatch;
 begin
   Stopwatch := TStopwatch.Create;
   Stopwatch.Start;
-  Sort.BubbleSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
+  Sort.PyramidSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
   Stopwatch.Stop;
-  BSTimeRun := Stopwatch.ElapsedMilliseconds;
+  PSTimeRun := Stopwatch.ElapsedMilliseconds;
 end;
 
 procedure TForm1.EditLengthSeqChange(Sender: TObject);
@@ -164,24 +164,24 @@ begin
   end;
 end;
 
-procedure TForm1.SetBSTimeRun(const Value: Integer);
+procedure TForm1.SetPSTimeRun(const Value: Integer);
 var
   TimeRun: Integer;
 begin
-  if FBSTimeRun <> Value then
+  if FPSTimeRun <> Value then
   begin
-    FBSTimeRun := Value;
-    TimeRun := FBSTimeRun;
+    FPSTimeRun := Value;
+    TimeRun := FPSTimeRun;
     LabelBSTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
-procedure TForm1.SetProgressBSort(const Value: Double);
+procedure TForm1.SetProgressPSort(const Value: Double);
 begin
-  if FProgressBSort <> Value then
+  if FProgressPSort <> Value then
   begin
-    FProgressBSort := Value;
-    LabelBSTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressBSort]);
+    FProgressPSort := Value;
+    LabelBSTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressPSort]);
     LabelBSTimeAndProgress.Update;
   end;
 end;

@@ -83,7 +83,7 @@ object Form1: TForm1
       Width = 200
       Height = 158
       Align = alRight
-      Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' "'#1055#1091#1079#1099#1088#1100#1082#1086#1084'"'
+      Caption = #1055#1080#1088#1072#1084#1080#1076#1072#1083#1100#1085#1072#1103' '#1089#1086#1088#1090#1080#1088#1086#1074#1082#1072
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -107,7 +107,7 @@ object Form1: TForm1
         ParentFont = False
         ExplicitWidth = 59
       end
-      object BtnBubbleSortSeq: TButton
+      object BtnPyramidSortSeq: TButton
         Left = 4
         Top = 24
         Width = 140
@@ -121,9 +121,9 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 0
         WordWrap = True
-        OnClick = BtnBubbleSortSeqClick
+        OnClick = BtnPyramidSortSeqClick
       end
-      object BtnReverseBubbleSortSeq: TButton
+      object BtnReversePyramidSortSeq: TButton
         Tag = 1
         Left = 4
         Top = 82
@@ -138,7 +138,7 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 1
         WordWrap = True
-        OnClick = BtnBubbleSortSeqClick
+        OnClick = BtnPyramidSortSeqClick
       end
     end
     object GBToolBarQuickSort: TGroupBox
