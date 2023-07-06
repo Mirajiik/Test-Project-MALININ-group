@@ -122,7 +122,7 @@ object Form1: TForm1
         ExplicitTop = 144
         ExplicitWidth = 59
       end
-      object BtnQuickSortBothSeq: TButton
+      object BtnQuickSortSeq: TButton
         Left = 3
         Top = 45
         Width = 140
@@ -136,16 +136,16 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 0
         WordWrap = True
-        OnClick = BtnQuickSortBothSeqClick
+        OnClick = BtnQuickSortSeqClick
       end
     end
   end
   object LBSeq1: TListBox
     Left = 0
     Top = 0
-    Width = 521
+    Width = 200
     Height = 459
-    Align = alClient
+    Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -154,9 +154,5 @@ object Form1: TForm1
     ItemHeight = 21
     ParentFont = False
     TabOrder = 1
-    ExplicitLeft = 81
-    ExplicitTop = 25
-    ExplicitWidth = 240
-    ExplicitHeight = 389
   end
 end
