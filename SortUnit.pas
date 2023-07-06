@@ -56,7 +56,7 @@ begin
   Sort;
 end;
 
-// BubbleSort
+{ BubbleSort }
 {procedure TBubbleSort.Sort;
 begin
 Form1.ProgressQSort := 0;
@@ -75,6 +75,12 @@ end;}
 
 { TQuickSort }
 procedure TQuickSort.Sort;
+  procedure UpdateTime;
+  begin
+    Synchronize(procedure begin
+      Form1.QSTimeRun := FStopWatch.ElapsedMilliseconds;
+    end);
+  end;
   procedure QuickSort(const min, max: Integer);
   var
     i, j: Integer;
@@ -87,14 +93,16 @@ procedure TQuickSort.Sort;
         if FReverse then
         begin
           while FArray[i]>supp do
-        begin
-          Inc(i);
-        end;
-        while FArray[j]<supp do
-        begin
-          Dec(j);
-        end;
-        if i<=j then
+          begin
+            Inc(i);
+            UpdateTime;
+          end;
+          while FArray[j]<supp do
+          begin
+            Dec(j);
+            UpdateTime;
+          end;
+          if i<=j then
           begin
             Swap(FArray[i], FArray[j]);
             Inc(i); Dec(j);
@@ -102,19 +110,21 @@ procedure TQuickSort.Sort;
         end
         else
         begin
-          while FArray[i]<supp = not FReverse do
-        begin
-          Inc(i);
-        end;
-        while FArray[j]>supp = not FReverse do
-        begin
-          Dec(j);
-        end;
-        if i<=j then
-        begin
-          Swap(FArray[i], FArray[j]);
-          Inc(i); Dec(j);
-        end;
+          while FArray[i]<supp do
+          begin
+            Inc(i);
+            UpdateTime;
+          end;
+          while FArray[j]>supp do
+          begin
+            Dec(j);
+            UpdateTime;
+          end;
+          if i<=j then
+          begin
+            Swap(FArray[i], FArray[j]);
+            Inc(i); Dec(j);
+          end;
         end;
       end;
     if min<j then QuickSort(min, j);
@@ -124,7 +134,7 @@ begin
   FStopWatch.Start;
   QuickSort(FMin, FMax);
   FStopWatch.Stop;
-  Form1.QSTimeRun := FStopwatch.ElapsedMilliseconds;
+  UpdateTime;
 end;
 
 { THeapSort }

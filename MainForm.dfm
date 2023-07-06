@@ -28,7 +28,7 @@ object Form1: TForm1
       Height = 158
       Align = alLeft
       TabOrder = 0
-      object LabelLengthSeq: TLabel
+      object lLengthSeq: TLabel
         Left = 1
         Top = 1
         Width = 178
@@ -59,7 +59,7 @@ object Form1: TForm1
         TabOrder = 0
         OnClick = BtnGenerateSeqClick
       end
-      object EditLengthSeq: TSpinEdit
+      object seLengthSeq: TSpinEdit
         Left = 1
         Top = 44
         Width = 178
@@ -74,7 +74,7 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 1
         Value = 1
-        OnChange = EditLengthSeqChange
+        OnChange = seLengthSeqChange
       end
     end
     object GBToolBarBubbleSort: TGroupBox
@@ -92,7 +92,7 @@ object Form1: TForm1
       ParentFont = False
       TabOrder = 1
       ExplicitLeft = 320
-      object LabelBSTimeAndProgress: TLabel
+      object lHeapSortTimeAndProgress: TLabel
         Left = 2
         Top = 131
         Width = 196
@@ -107,7 +107,7 @@ object Form1: TForm1
         ParentFont = False
         ExplicitWidth = 59
       end
-      object BtnPyramidSortSeq: TButton
+      object BtnHeapSortSeq: TButton
         Left = 4
         Top = 24
         Width = 140
@@ -121,9 +121,9 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 0
         WordWrap = True
-        OnClick = BtnPyramidSortSeqClick
+        OnClick = BtnHeapSortSeqClick
       end
-      object BtnReversePyramidSortSeq: TButton
+      object BtnReverseHeapSortSeq: TButton
         Tag = 1
         Left = 4
         Top = 82
@@ -138,7 +138,7 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 1
         WordWrap = True
-        OnClick = BtnPyramidSortSeqClick
+        OnClick = BtnHeapSortSeqClick
       end
     end
     object GBToolBarQuickSort: TGroupBox
@@ -156,7 +156,7 @@ object Form1: TForm1
       ParentFont = False
       TabOrder = 2
       ExplicitLeft = 160
-      object LabelQSTimeAndProgress: TLabel
+      object lQuickSortTimeAndProgress: TLabel
         Left = 2
         Top = 131
         Width = 196
@@ -206,7 +206,7 @@ object Form1: TForm1
       end
     end
   end
-  object LBSeq1: TListBox
+  object lbSeq: TListBox
     Left = 0
     Top = 0
     Width = 200
