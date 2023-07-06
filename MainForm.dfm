@@ -2,9 +2,11 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'SortNumSequence'
-  ClientHeight = 579
-  ClientWidth = 616
+  ClientHeight = 582
+  ClientWidth = 618
   Color = clBtnFace
+  Constraints.MinHeight = 620
+  Constraints.MinWidth = 630
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -14,8 +16,8 @@ object MainForm: TMainForm
   TextHeight = 15
   object PanelToolBar: TPanel
     Left = 0
-    Top = 419
-    Width = 616
+    Top = 422
+    Width = 618
     Height = 160
     Align = alBottom
     TabOrder = 0
@@ -78,7 +80,7 @@ object MainForm: TMainForm
       end
     end
     object GBToolBarBubbleSort: TGroupBox
-      Left = 415
+      Left = 417
       Top = 1
       Width = 200
       Height = 158
@@ -142,7 +144,7 @@ object MainForm: TMainForm
       end
     end
     object GBToolBarQuickSort: TGroupBox
-      Left = 215
+      Left = 217
       Top = 1
       Width = 200
       Height = 158
@@ -210,7 +212,7 @@ object MainForm: TMainForm
     Left = 0
     Top = 0
     Width = 200
-    Height = 419
+    Height = 422
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -225,8 +227,8 @@ object MainForm: TMainForm
   object ChartSortProgress: TChart
     Left = 200
     Top = 0
-    Width = 416
-    Height = 419
+    Width = 418
+    Height = 422
     Legend.Visible = False
     Title.Text.Strings = (
       #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)

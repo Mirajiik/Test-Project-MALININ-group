@@ -2,7 +2,8 @@ unit SortUnit;
 
 interface
 
-uses System.Classes, Generics.Collections, System.Diagnostics;
+uses System.Classes, Generics.Collections, System.Diagnostics, Vcl.StdCtrls,
+ Vcl.Dialogs, Winapi.Windows;
 
   type
   TSortThread = class(TThread)
@@ -51,9 +52,23 @@ end;
 
 procedure TSortThread.Execute;
 begin
+  for var i := 0 to frmMain.ComponentCount - 1 do
+  begin
+    if frmMain.Components[i] is TButton then
+    begin
+      (frmMain.Components[i] as TButton).Enabled := False;
+    end;
+  end;
   FStopWatch.Start;
   Sort;
   FStopWatch.Stop;
+  for var i := 0 to frmMain.ComponentCount - 1 do
+  begin
+    if frmMain.Components[i] is TButton then
+    begin
+      (frmMain.Components[i] as TButton).Enabled := True;
+    end;
+  end;
 end;
 
 { TQuickSort }
@@ -153,15 +168,15 @@ var
   i: Integer;
 begin
   frmMain.ProgressPSort := 0;
-  for I := FMax div 2 downto FMin do
+  for i := FMax div 2 downto FMin do
   begin
     SiftDown(i, Length(FArray));
   end;
-  for I := FMax downto FMin + 1 do
+  for i := FMax downto FMin + 1 do
   begin
     Swap(FArray[i], FArray[0]);
     SiftDown(0, i);
-    frmMain.ProgressPSort := (FMax - i) / (FMax - FMin) * 100;
+    frmMain.ProgressPSort := (FMax - i) / (FMax - FMin + 1) * 100;
   end;
   frmMain.HSTimeRun := FStopWatch.ElapsedMilliseconds;
 end;
