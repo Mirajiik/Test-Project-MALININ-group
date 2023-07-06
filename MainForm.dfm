@@ -155,4 +155,35 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 1
   end
+  object ChartSortProgress: TChart
+    Left = 200
+    Top = 0
+    Width = 321
+    Height = 459
+    Title.Text.Strings = (
+      'TChart')
+    View3D = False
+    Align = alClient
+    AutoSize = True
+    TabOrder = 2
+    ExplicitLeft = 360
+    ExplicitTop = 232
+    ExplicitWidth = 400
+    ExplicitHeight = 250
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 13
+    object Series1: TBarSeries
+      HoverElement = []
+      Title = 'SeriesSeq'
+      MultiBar = mbNone
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Bar'
+      YValues.Order = loNone
+      Data = {
+        0006000000000000000000744000000000001870400000000000906F40000000
+        000000744000000000000871400000000000A07440}
+      Detail = {0000000000}
+    end
+  end
 end

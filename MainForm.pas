@@ -20,6 +20,8 @@ type
     BtnQuickSortSeq: TButton;
     LabelTimeAndProgress: TLabel;
     LBSeq1: TListBox;
+    ChartSortProgress: TChart;
+    Series1: TBarSeries;
     procedure EditLengthSeqChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnGenerateSeqClick(Sender: TObject);
@@ -52,6 +54,7 @@ begin
   FLengthSeq := -1;
   LengthSeq := 0;
   BtnQuickSortSeq.Enabled := False;
+  Series1.Clear;
 end;
 
 procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
@@ -73,13 +76,18 @@ procedure TForm1.UpdateView;
 var
   I : Integer;
 begin
+  Series1.BeginUpdate;
+  Series1.Clear;
   LBSeq1.Items.BeginUpdate;
   LBSeq1.Clear;
   for I := 0 to LengthSeq-1 do
   begin
     LBSeq1.Items.Add(FloatToStr(NumSeq1[I]));
+    Series1.Add(NumSeq1[I], IntToStr(I));
   end;
+  Series1.EndUpdate;
   LBSeq1.Items.EndUpdate;
+  ChartSortProgress.Draw;
 end;
 
 procedure TForm1.BtnQuickSortSeqClick(Sender: TObject);
