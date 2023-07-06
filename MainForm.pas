@@ -143,11 +143,14 @@ begin
 end;
 
 procedure TForm1.SetQSTimeRun(const Value: Integer);
+var
+  TimeRun: Integer;
 begin
   if FQSTimeRun <> Value then
   begin
     FQSTimeRun := Value;
-    LabelQSTimeAndProgress.Caption := 'Время: ' + IntToStr(FQSTimeRun) + 'ms';
+    TimeRun := FQSTimeRun;
+    LabelQSTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
@@ -156,18 +159,20 @@ begin
   if FProgressQSort <> Value then
   begin
     FProgressQSort := Value;
-    LabelQSTimeAndProgress.Caption := 'Прогресс: ' +
-      FloatToStr(SimpleRoundTo(FProgressQSort, -1)) + '%';
+    LabelQSTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressQSort]);
     LabelQSTimeAndProgress.Update;
   end;
 end;
 
 procedure TForm1.SetBSTimeRun(const Value: Integer);
+var
+  TimeRun: Integer;
 begin
   if FBSTimeRun <> Value then
   begin
     FBSTimeRun := Value;
-    LabelBSTimeAndProgress.Caption := 'Время: ' + IntToStr(FBSTimeRun) + 'ms';
+    TimeRun := FBSTimeRun;
+    LabelBSTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
@@ -176,8 +181,7 @@ begin
   if FProgressBSort <> Value then
   begin
     FProgressBSort := Value;
-    LabelBSTimeAndProgress.Caption := 'Прогресс: ' +
-      FloatToStr(SimpleRoundTo(FProgressBSort, -1)) + '%';
+    LabelBSTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressBSort]);
     LabelBSTimeAndProgress.Update;
   end;
 end;

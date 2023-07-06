@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'SortNumSequence'
-  ClientHeight = 579
-  ClientWidth = 521
+  ClientHeight = 580
+  ClientWidth = 620
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object Form1: TForm1
   TextHeight = 15
   object PanelToolBar: TPanel
     Left = 0
-    Top = 419
-    Width = 521
+    Top = 420
+    Width = 620
     Height = 160
     Align = alBottom
     TabOrder = 0
@@ -78,9 +78,9 @@ object Form1: TForm1
       end
     end
     object GBToolBarBubbleSort: TGroupBox
-      Left = 360
+      Left = 419
       Top = 1
-      Width = 160
+      Width = 200
       Height = 158
       Align = alRight
       Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' "'#1055#1091#1079#1099#1088#1100#1082#1086#1084'"'
@@ -91,11 +91,11 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 356
+      ExplicitLeft = 320
       object LabelBSTimeAndProgress: TLabel
         Left = 2
         Top = 131
-        Width = 156
+        Width = 196
         Height = 25
         Align = alBottom
         Caption = #1042#1088#1077#1084#1103':'
@@ -142,9 +142,9 @@ object Form1: TForm1
       end
     end
     object GBToolBarQuickSort: TGroupBox
-      Left = 200
+      Left = 219
       Top = 1
-      Width = 160
+      Width = 200
       Height = 158
       Align = alRight
       Caption = '"'#1041#1099#1089#1090#1088#1072#1103'" '#1089#1086#1088#1090#1080#1088#1086#1074#1082#1072
@@ -155,11 +155,11 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 196
+      ExplicitLeft = 160
       object LabelQSTimeAndProgress: TLabel
         Left = 2
         Top = 131
-        Width = 156
+        Width = 196
         Height = 25
         Align = alBottom
         Caption = #1042#1088#1077#1084#1103':'
@@ -210,7 +210,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 200
-    Height = 419
+    Height = 420
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -225,8 +225,8 @@ object Form1: TForm1
   object ChartSortProgress: TChart
     Left = 200
     Top = 0
-    Width = 321
-    Height = 419
+    Width = 420
+    Height = 420
     Legend.Visible = False
     Title.Text.Strings = (
       #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)
