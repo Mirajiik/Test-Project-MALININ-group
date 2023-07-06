@@ -19,8 +19,8 @@ object Form1: TForm1
     Height = 120
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 457
-    ExplicitWidth = 715
+    ExplicitTop = 458
+    ExplicitWidth = 517
     object PanelGenerateSeq: TPanel
       Left = 1
       Top = 1
@@ -88,7 +88,37 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 454
+      ExplicitLeft = 356
+      object LabelBSTimeAndProgress: TLabel
+        Left = 2
+        Top = 91
+        Width = 156
+        Height = 25
+        Align = alBottom
+        Caption = #1042#1088#1077#1084#1103':'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        ExplicitWidth = 59
+      end
+      object BtnBubbleSortSeq: TButton
+        Left = 4
+        Top = 45
+        Width = 140
+        Height = 40
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        OnClick = BtnBubbleSortSeqClick
+      end
     end
     object GBToolBarQuickSort: TGroupBox
       Left = 200
@@ -104,8 +134,8 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 294
-      object LabelTimeAndProgress: TLabel
+      ExplicitLeft = 196
+      object LabelQSTimeAndProgress: TLabel
         Left = 2
         Top = 91
         Width = 156
@@ -118,8 +148,6 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        ExplicitLeft = 24
-        ExplicitTop = 144
         ExplicitWidth = 59
       end
       object BtnQuickSortSeq: TButton
@@ -154,26 +182,27 @@ object Form1: TForm1
     ItemHeight = 21
     ParentFont = False
     TabOrder = 1
+    ExplicitHeight = 458
   end
   object ChartSortProgress: TChart
     Left = 200
     Top = 0
     Width = 321
     Height = 459
+    Legend.Visible = False
     Title.Text.Strings = (
-      'TChart')
+      #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)
     View3D = False
     Align = alClient
     AutoSize = True
     TabOrder = 2
-    ExplicitLeft = 360
-    ExplicitTop = 232
-    ExplicitWidth = 400
-    ExplicitHeight = 250
+    ExplicitWidth = 317
+    ExplicitHeight = 458
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
     object Series1: TBarSeries
       HoverElement = []
+      Marks.Visible = False
       Title = 'SeriesSeq'
       MultiBar = mbNone
       XValues.Name = 'X'
