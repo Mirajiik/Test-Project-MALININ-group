@@ -10,7 +10,7 @@ uses
   VclTee.TeeGDIPlus;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     PanelToolBar: TPanel;
     PanelGenerateSeq: TPanel;
     lLengthSeq: TLabel;
@@ -36,31 +36,29 @@ type
     FLengthSeq: Integer;
     FQSTimeRun: Integer;
     FProgressQSort: Double;
-    FPSTimeRun: Integer;
-    FProgressPSort: Double;
+    FHSTimeRun: Integer;
+    FProgressHSort: Double;
     SortThread: TSortThread;
     procedure SetLengthSeq(const Value: Integer);
     procedure SetQSTimeRun(const Value: Integer);
-    procedure SetProgressQSort(const Value: Double);
-    procedure SetPSTimeRun(const Value: Integer);
-    procedure SetProgressPSort(const Value: Double);
+    procedure SetHSTimeRun(const Value: Integer);
+    procedure SetProgressHSort(const Value: Double);
   public
     procedure UpdateView;
     property LengthSeq: Integer read FLengthSeq write SetLengthSeq;
     property QSTimeRun: Integer read FQSTimeRun write SetQSTimeRun;
-    property ProgressQSort: Double read FProgressQSort write SetProgressQSort;
-    property PSTimeRun: Integer read FPSTimeRun write SetPSTimeRun;
-    property ProgressPSort: Double read FProgressPSort write SetProgressPSort;
+    property HSTimeRun: Integer read FHSTimeRun write SetHSTimeRun;
+    property ProgressPSort: Double read FProgressHSort write SetProgressHSort;
   end;
 var
-  Form1: TForm1;
+  frmMain: TMainForm;
   NumSeq : TArray<Double>;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FLengthSeq := 0;
   LengthSeq := 1;
@@ -71,7 +69,7 @@ begin
   Series1.Clear;
 end;
 
-procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
+procedure TMainForm.BtnGenerateSeqClick(Sender: TObject);
 begin
   NumSeq := nil;
   BtnQuickSortSeq.Enabled := True;
@@ -88,7 +86,7 @@ begin
   UpdateView;
 end;
 
-procedure TForm1.UpdateView;
+procedure TMainForm.UpdateView;
 var
   I : Integer;
 begin
@@ -106,24 +104,24 @@ begin
   ChartSortProgress.Draw;
 end;
 
-procedure TForm1.BtnQuickSortSeqClick(Sender: TObject);
+procedure TMainForm.BtnQuickSortSeqClick(Sender: TObject);
 begin
   SortThread := TQuickSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
   SortThread.Start;
 end;
 
-procedure TForm1.BtnHeapSortSeqClick(Sender: TObject);
+procedure TMainForm.BtnHeapSortSeqClick(Sender: TObject);
 begin
   SortThread := THeapSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
   SortThread.Start;
 end;
 
-procedure TForm1.seLengthSeqChange(Sender: TObject);
+procedure TMainForm.seLengthSeqChange(Sender: TObject);
 begin
   LengthSeq := seLengthSeq.Value;
 end;
 
-procedure TForm1.SetLengthSeq(const Value: Integer);
+procedure TMainForm.SetLengthSeq(const Value: Integer);
 begin
   if FLengthSeq <> Value then
   begin
@@ -132,7 +130,7 @@ begin
   end;
 end;
 
-procedure TForm1.SetQSTimeRun(const Value: Integer);
+procedure TMainForm.SetQSTimeRun(const Value: Integer);
 var
   TimeRun: Integer;
 begin
@@ -144,34 +142,24 @@ begin
   end;
 end;
 
-procedure TForm1.SetProgressQSort(const Value: Double);
-begin
-  if FProgressQSort <> Value then
-  begin
-    FProgressQSort := Value;
-    lQuickSortTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressQSort]);
-    lQuickSortTimeAndProgress.Update;
-  end;
-end;
-
-procedure TForm1.SetPSTimeRun(const Value: Integer);
+procedure TMainForm.SetHSTimeRun(const Value: Integer);
 var
   TimeRun: Integer;
 begin
-  if FPSTimeRun <> Value then
+  if FHSTimeRun <> Value then
   begin
-    FPSTimeRun := Value;
-    TimeRun := FPSTimeRun;
+    FHSTimeRun := Value;
+    TimeRun := FHSTimeRun;
     lHeapSortTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
-procedure TForm1.SetProgressPSort(const Value: Double);
+procedure TMainForm.SetProgressHSort(const Value: Double);
 begin
-  if FProgressPSort <> Value then
+  if FProgressHSort <> Value then
   begin
-    FProgressPSort := Value;
-    lHeapSortTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressPSort]);
+    FProgressHSort := Value;
+    lHeapSortTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressHSort]);
     lHeapSortTimeAndProgress.Update;
   end;
 end;

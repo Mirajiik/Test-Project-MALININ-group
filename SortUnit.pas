@@ -17,9 +17,6 @@ uses System.Classes, Generics.Collections, System.Diagnostics;
     procedure Execute; override;
     procedure Sort; virtual; abstract;
   end;
-  {TBubbleSort = class(TSortThread)
-    procedure Sort; override;
-  end;}
   TQuickSort = class(TSortThread)
     procedure Sort; override;
   end;
@@ -48,37 +45,23 @@ begin
   Temp := A;
   A := B;
   B := Temp;
-  Synchronize(Form1.UpdateView);
+  Sleep(5);
+  Synchronize(frmMain.UpdateView);
 end;
 
 procedure TSortThread.Execute;
 begin
+  FStopWatch.Start;
   Sort;
+  FStopWatch.Stop;
 end;
-
-{ BubbleSort }
-{procedure TBubbleSort.Sort;
-begin
-Form1.ProgressQSort := 0;
-for var i:= FMin to FMax-1 do
-begin
-  for var j := FMin to FMax - 1 - (i - FMin) do
-  begin
-    if FArray[j] > FArray[j+1] = not FReverse then
-    begin
-      Swap(FArray[j], FArray[j+1]);
-    end;
-  end;
-  Form1.ProgressQSort := (i - FMin) / (FMax - FMin) * 100;
-  end;
-end;}
 
 { TQuickSort }
 procedure TQuickSort.Sort;
   procedure UpdateTime;
   begin
     Synchronize(procedure begin
-      Form1.QSTimeRun := FStopWatch.ElapsedMilliseconds;
+      frmMain.QSTimeRun := FStopWatch.ElapsedMilliseconds;
     end);
   end;
   procedure QuickSort(const min, max: Integer);
@@ -131,9 +114,7 @@ procedure TQuickSort.Sort;
     if i<max then QuickSort(i, max);
   end;
 begin
-  FStopWatch.Start;
   QuickSort(FMin, FMax);
-  FStopWatch.Stop;
   UpdateTime;
 end;
 
@@ -171,8 +152,7 @@ procedure THeapSort.Sort;
 var
   i: Integer;
 begin
-  FStopWatch.Start;
-  Form1.ProgressPSort := 0;
+  frmMain.ProgressPSort := 0;
   for I := FMax div 2 downto FMin do
   begin
     SiftDown(i, Length(FArray));
@@ -181,10 +161,9 @@ begin
   begin
     Swap(FArray[i], FArray[0]);
     SiftDown(0, i);
-    Form1.ProgressPSort := (FMax - i) / (FMax - FMin) * 100;
+    frmMain.ProgressPSort := (FMax - i) / (FMax - FMin) * 100;
   end;
-  FStopWatch.Stop;
-  Form1.PSTimeRun := FStopWatch.ElapsedMilliseconds;
+  frmMain.HSTimeRun := FStopWatch.ElapsedMilliseconds;
 end;
 
 end.

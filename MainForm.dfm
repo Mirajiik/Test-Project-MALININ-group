@@ -1,9 +1,9 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'SortNumSequence'
-  ClientHeight = 580
-  ClientWidth = 620
+  ClientHeight = 579
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,13 +14,13 @@ object Form1: TForm1
   TextHeight = 15
   object PanelToolBar: TPanel
     Left = 0
-    Top = 420
-    Width = 620
+    Top = 419
+    Width = 616
     Height = 160
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 418
-    ExplicitWidth = 517
+    ExplicitWidth = 612
     object PanelGenerateSeq: TPanel
       Left = 1
       Top = 1
@@ -78,7 +78,7 @@ object Form1: TForm1
       end
     end
     object GBToolBarBubbleSort: TGroupBox
-      Left = 419
+      Left = 415
       Top = 1
       Width = 200
       Height = 158
@@ -91,7 +91,7 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 320
+      ExplicitLeft = 411
       object lHeapSortTimeAndProgress: TLabel
         Left = 2
         Top = 131
@@ -142,7 +142,7 @@ object Form1: TForm1
       end
     end
     object GBToolBarQuickSort: TGroupBox
-      Left = 219
+      Left = 215
       Top = 1
       Width = 200
       Height = 158
@@ -155,7 +155,7 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 160
+      ExplicitLeft = 211
       object lQuickSortTimeAndProgress: TLabel
         Left = 2
         Top = 131
@@ -210,7 +210,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 200
-    Height = 420
+    Height = 419
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -225,8 +225,8 @@ object Form1: TForm1
   object ChartSortProgress: TChart
     Left = 200
     Top = 0
-    Width = 420
-    Height = 420
+    Width = 416
+    Height = 419
     Legend.Visible = False
     Title.Text.Strings = (
       #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)
@@ -234,7 +234,7 @@ object Form1: TForm1
     Align = alClient
     AutoSize = True
     TabOrder = 2
-    ExplicitWidth = 317
+    ExplicitWidth = 412
     ExplicitHeight = 418
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
