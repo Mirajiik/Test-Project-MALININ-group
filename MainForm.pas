@@ -69,6 +69,7 @@ end;
 
 procedure TMainForm.BtnGenerateSeqClick(Sender: TObject);
 begin
+  Finalize(NumSeq);
   NumSeq := nil;
   BtnQuickSortSeq.Enabled := True;
   BtnHeapSortSeq.Enabled := True;
