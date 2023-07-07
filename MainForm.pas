@@ -5,180 +5,175 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Math,
   System.Diagnostics, System.Threading, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, Vcl.StdCtrls, SortUnit, VclTee.TeeGDIPlus, VCLTee.TeEngine,
-  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series, Vcl.Samples.Spin;
+  Vcl.ExtCtrls, Vcl.StdCtrls, SortUnit, VCLTee.TeEngine,
+  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.Series, Vcl.Samples.Spin,
+  VclTee.TeeGDIPlus;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     PanelToolBar: TPanel;
     PanelGenerateSeq: TPanel;
-    LabelLengthSeq: TLabel;
+    lLengthSeq: TLabel;
     BtnGenerateSeq: TButton;
     GBToolBarBubbleSort: TGroupBox;
     GBToolBarQuickSort: TGroupBox;
     BtnQuickSortSeq: TButton;
-    LabelQSTimeAndProgress: TLabel;
-    LBSeq1: TListBox;
+    lQuickSortTimeAndProgress: TLabel;
+    lbSeq: TListBox;
     ChartSortProgress: TChart;
     Series1: TBarSeries;
-    BtnBubbleSortSeq: TButton;
-    LabelBSTimeAndProgress: TLabel;
+    BtnHeapSortSeq: TButton;
+    lHeapSortTimeAndProgress: TLabel;
     BtnReverseQuickSortSeq: TButton;
-    BtnReverseBubbleSortSeq: TButton;
-    EditLengthSeq: TSpinEdit;
-    procedure EditLengthSeqChange(Sender: TObject);
+    BtnReverseHeapSortSeq: TButton;
+    seLengthSeq: TSpinEdit;
+    BtnStopSort: TButton;
+    procedure seLengthSeqChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnGenerateSeqClick(Sender: TObject);
     procedure BtnQuickSortSeqClick(Sender: TObject);
-    procedure BtnBubbleSortSeqClick(Sender: TObject);
+    procedure BtnHeapSortSeqClick(Sender: TObject);
+    procedure BtnStopSortClick(Sender: TObject);
   private
     FLengthSeq: Integer;
     FQSTimeRun: Integer;
     FProgressQSort: Double;
-    FBSTimeRun: Integer;
-    FProgressBSort: Double;
+    FHSTimeRun: Integer;
+    FProgressHSort: Double;
+    SortThread: TSortThread;
     procedure SetLengthSeq(const Value: Integer);
     procedure SetQSTimeRun(const Value: Integer);
-    procedure SetProgressQSort(const Value: Double);
-    procedure SetBSTimeRun(const Value: Integer);
-    procedure SetProgressBSort(const Value: Double);
+    procedure SetHSTimeRun(const Value: Integer);
+    procedure SetProgressHSort(const Value: Double);
   public
     procedure UpdateView;
     property LengthSeq: Integer read FLengthSeq write SetLengthSeq;
     property QSTimeRun: Integer read FQSTimeRun write SetQSTimeRun;
-    property ProgressQSort: Double read FProgressQSort write SetProgressQSort;
-    property BSTimeRun: Integer read FBSTimeRun write SetBSTimeRun;
-    property ProgressBSort: Double read FProgressBSort write SetProgressBSort;
+    property HSTimeRun: Integer read FHSTimeRun write SetHSTimeRun;
+    property ProgressPSort: Double read FProgressHSort write SetProgressHSort;
   end;
 var
-  Form1: TForm1;
-  NumSeq1 : TArray<Double>;
-  TempList: TStrings;
-  Sort: TSort;
+  frmMain: TMainForm;
+  NumSeq : TArray<Double>;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FLengthSeq := 0;
   LengthSeq := 1;
-  BtnQuickSortSeq.Enabled := False;
-  BtnBubbleSortSeq.Enabled := False;
-  BtnReverseQuickSortSeq.Enabled := False;
-  BtnReverseBubbleSortSeq.Enabled := False;
   Series1.Clear;
 end;
 
-procedure TForm1.BtnGenerateSeqClick(Sender: TObject);
+//Генерация случайной последовательности чисел
+procedure TMainForm.BtnGenerateSeqClick(Sender: TObject);
 begin
-  NumSeq1 := nil;
+  Finalize(NumSeq);
+  NumSeq := nil;
   BtnQuickSortSeq.Enabled := True;
-  BtnBubbleSortSeq.Enabled := True;
+  BtnHeapSortSeq.Enabled := True;
   BtnReverseQuickSortSeq.Enabled := True;
-  BtnReverseBubbleSortSeq.Enabled := True;
-  SetLength(NumSeq1, LengthSeq);
+  BtnReverseHeapSortSeq.Enabled := True;
+  SetLength(NumSeq, LengthSeq);
   var Temp: Double;
-  for var I := 0 to LengthSeq-1 do
+  for var I := 0 to High(NumSeq) do
   begin
     Temp := Random*10000;
-    NumSeq1[I] := Temp;
+    NumSeq[I] := Temp;
   end;
   UpdateView;
 end;
 
-procedure TForm1.UpdateView;
+//Обновление ListBox'a и перерисовка диаграммы
+procedure TMainForm.UpdateView;
 var
   I : Integer;
 begin
   Series1.BeginUpdate;
   Series1.Clear;
-  LBSeq1.Items.BeginUpdate;
-  LBSeq1.Clear;
-  for I := 0 to LengthSeq-1 do
+  lbSeq.Items.BeginUpdate;
+  lbSeq.Clear;
+  for I := 0 to High(NumSeq) do
   begin
-    LBSeq1.Items.Add(FloatToStr(NumSeq1[I]));
-    Series1.Add(NumSeq1[I], IntToStr(I));
+    lbSeq.Items.Add(FloatToStr(NumSeq[I]));
+    Series1.Add(NumSeq[I], IntToStr(I));
   end;
   Series1.EndUpdate;
-  LBSeq1.Items.EndUpdate;
+  lbSeq.Items.EndUpdate;
   ChartSortProgress.Draw;
 end;
 
-procedure TForm1.BtnQuickSortSeqClick(Sender: TObject);
-var
-  Stopwatch: TStopwatch;
+//Остановка сортировки
+procedure TMainForm.BtnStopSortClick(Sender: TObject);
 begin
-  Stopwatch := TStopwatch.Create;
-  Stopwatch.Start;
-  Sort.qSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
-  Stopwatch.Stop;
-  QSTimeRun := Stopwatch.ElapsedMilliseconds;
+  SortThread.Terminate;
 end;
 
-procedure TForm1.BtnBubbleSortSeqClick(Sender: TObject);
-var
-  Stopwatch: TStopwatch;
+//Запуск потока "быстрой" сортировки
+procedure TMainForm.BtnQuickSortSeqClick(Sender: TObject);
 begin
-  Stopwatch := TStopwatch.Create;
-  Stopwatch.Start;
-  Sort.BubbleSort(NumSeq1, 0, High(NumSeq1), (Sender as TButton).Tag = 1);
-  Stopwatch.Stop;
-  BSTimeRun := Stopwatch.ElapsedMilliseconds;
+  SortThread := TQuickSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
+  SortThread.Start;
 end;
 
-procedure TForm1.EditLengthSeqChange(Sender: TObject);
+//Запуск потока пирамидальной сортировки
+procedure TMainForm.BtnHeapSortSeqClick(Sender: TObject);
 begin
-  LengthSeq := EditLengthSeq.Value;
+  SortThread := THeapSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
+  SortThread.Start;
 end;
 
-procedure TForm1.SetLengthSeq(const Value: Integer);
+//Связка поля со значением SpinEdit на форме
+procedure TMainForm.seLengthSeqChange(Sender: TObject);
+begin
+  LengthSeq := seLengthSeq.Value;
+end;
+
+procedure TMainForm.SetLengthSeq(const Value: Integer);
 begin
   if FLengthSeq <> Value then
   begin
     FLengthSeq := Value;
-    EditLengthSeq.Value := FLengthSeq;
+    seLengthSeq.Value := FLengthSeq;
   end;
 end;
 
-procedure TForm1.SetQSTimeRun(const Value: Integer);
+//Запись на форму времени выполнения "быстрой" сортировки
+procedure TMainForm.SetQSTimeRun(const Value: Integer);
+var
+  TimeRun: Integer;
 begin
   if FQSTimeRun <> Value then
   begin
     FQSTimeRun := Value;
-    LabelQSTimeAndProgress.Caption := 'Время: ' + IntToStr(FQSTimeRun) + 'ms';
+    TimeRun := FQSTimeRun;
+    lQuickSortTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
-procedure TForm1.SetProgressQSort(const Value: Double);
+//Запись на форму времени выполнения пирамидальной сортировки
+procedure TMainForm.SetHSTimeRun(const Value: Integer);
+var
+  TimeRun: Integer;
 begin
-  if FProgressQSort <> Value then
+  if FHSTimeRun <> Value then
   begin
-    FProgressQSort := Value;
-    LabelQSTimeAndProgress.Caption := 'Прогресс: ' +
-      FloatToStr(SimpleRoundTo(FProgressQSort, -1)) + '%';
-    LabelQSTimeAndProgress.Update;
+    FHSTimeRun := Value;
+    TimeRun := FHSTimeRun;
+    lHeapSortTimeAndProgress.Caption := Format('Время: %d s %d ms', [TimeRun div 1000, TimeRun mod 1000]);
   end;
 end;
 
-procedure TForm1.SetBSTimeRun(const Value: Integer);
+//Запись на форму прогресса пирамидальной сортировки
+procedure TMainForm.SetProgressHSort(const Value: Double);
 begin
-  if FBSTimeRun <> Value then
+  if FProgressHSort <> Value then
   begin
-    FBSTimeRun := Value;
-    LabelBSTimeAndProgress.Caption := 'Время: ' + IntToStr(FBSTimeRun) + 'ms';
-  end;
-end;
-
-procedure TForm1.SetProgressBSort(const Value: Double);
-begin
-  if FProgressBSort <> Value then
-  begin
-    FProgressBSort := Value;
-    LabelBSTimeAndProgress.Caption := 'Прогресс: ' +
-      FloatToStr(SimpleRoundTo(FProgressBSort, -1)) + '%';
-    LabelBSTimeAndProgress.Update;
+    FProgressHSort := Value;
+    lHeapSortTimeAndProgress.Caption := Format('Прогресс: %.1f %%', [FProgressHSort]);
+    lHeapSortTimeAndProgress.Update;
   end;
 end;
 end.
