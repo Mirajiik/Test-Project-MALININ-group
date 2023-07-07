@@ -6,6 +6,7 @@ uses System.Classes, Generics.Collections, System.Diagnostics, Vcl.StdCtrls,
  Vcl.Dialogs, Winapi.Windows;
 
   type
+  //Создание базового класса потока
   TSortThread = class(TThread)
   private
     FArray: TArray<Double>;
@@ -18,9 +19,11 @@ uses System.Classes, Generics.Collections, System.Diagnostics, Vcl.StdCtrls,
     procedure Execute; override;
     procedure Sort; virtual; abstract;
   end;
+  //Класс "быстрой" сортировки
   TQuickSort = class(TSortThread)
     procedure Sort; override;
   end;
+  //Класс пирамидальной сортировки
   THeapSort = class(TSortThread)
     procedure Sort; override;
   end;
@@ -39,6 +42,7 @@ begin
   inherited Create(True);
 end;
 
+//Обмен значений и обновление формы
 procedure TSortThread.Swap<T>(var A, B: T);
 var
   Temp: T;
@@ -50,6 +54,7 @@ begin
   Synchronize(frmMain.UpdateView);
 end;
 
+//Блокировка кнопок, запуск таймера, сортировка
 procedure TSortThread.Execute;
 begin
   for var i := 0 to frmMain.ComponentCount - 1 do
@@ -75,6 +80,7 @@ end;
 
 { TQuickSort }
 procedure TQuickSort.Sort;
+  //Обновление времени выполнения на форме
   procedure UpdateTime;
   begin
     Synchronize(procedure begin

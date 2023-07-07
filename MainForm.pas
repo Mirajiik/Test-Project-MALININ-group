@@ -67,6 +67,7 @@ begin
   Series1.Clear;
 end;
 
+//√енераци€ случайной последовательности чисел
 procedure TMainForm.BtnGenerateSeqClick(Sender: TObject);
 begin
   Finalize(NumSeq);
@@ -85,6 +86,7 @@ begin
   UpdateView;
 end;
 
+//ќбновление ListBox'a и перерисовка диаграммы
 procedure TMainForm.UpdateView;
 var
   I : Integer;
@@ -103,23 +105,27 @@ begin
   ChartSortProgress.Draw;
 end;
 
+//ќстановка сортировки
+procedure TMainForm.BtnStopSortClick(Sender: TObject);
+begin
+  SortThread.Terminate;
+end;
+
+//«апуск потока "быстрой" сортировки
 procedure TMainForm.BtnQuickSortSeqClick(Sender: TObject);
 begin
   SortThread := TQuickSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
   SortThread.Start;
 end;
 
-procedure TMainForm.BtnStopSortClick(Sender: TObject);
-begin
-  SortThread.Terminate;
-end;
-
+//«апуск потока пирамидальной сортировки
 procedure TMainForm.BtnHeapSortSeqClick(Sender: TObject);
 begin
   SortThread := THeapSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
   SortThread.Start;
 end;
 
+//—в€зка пол€ со значением SpinEdit на форме
 procedure TMainForm.seLengthSeqChange(Sender: TObject);
 begin
   LengthSeq := seLengthSeq.Value;
@@ -134,6 +140,7 @@ begin
   end;
 end;
 
+//«апись на форму времени выполнени€ "быстрой" сортировки
 procedure TMainForm.SetQSTimeRun(const Value: Integer);
 var
   TimeRun: Integer;
@@ -146,6 +153,7 @@ begin
   end;
 end;
 
+//«апись на форму времени выполнени€ пирамидальной сортировки
 procedure TMainForm.SetHSTimeRun(const Value: Integer);
 var
   TimeRun: Integer;
@@ -158,6 +166,7 @@ begin
   end;
 end;
 
+//«апись на форму прогресса пирамидальной сортировки
 procedure TMainForm.SetProgressHSort(const Value: Double);
 begin
   if FProgressHSort <> Value then
