@@ -76,7 +76,7 @@ begin
   BtnReverseHeapSortSeq.Enabled := True;
   SetLength(NumSeq, LengthSeq);
   var Temp: Double;
-  for var I := 0 to LengthSeq-1 do
+  for var I := 0 to High(NumSeq) do
   begin
     Temp := Random*10000;
     NumSeq[I] := Temp;

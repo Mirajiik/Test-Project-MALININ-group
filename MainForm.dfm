@@ -58,7 +58,7 @@ object MainForm: TMainForm
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 1
         OnClick = BtnGenerateSeqClick
       end
       object seLengthSeq: TSpinEdit
@@ -74,7 +74,7 @@ object MainForm: TMainForm
         MaxValue = 100000
         MinValue = 1
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         Value = 1
         OnChange = seLengthSeqChange
       end
@@ -109,7 +109,7 @@ object MainForm: TMainForm
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 2
       ExplicitLeft = 411
       object lHeapSortTimeAndProgress: TLabel
         Left = 2
@@ -175,7 +175,7 @@ object MainForm: TMainForm
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
       ExplicitLeft = 211
       object lQuickSortTimeAndProgress: TLabel
         Left = 2
@@ -234,6 +234,7 @@ object MainForm: TMainForm
     Top = 0
     Width = 200
     Height = 422
+    TabStop = False
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -255,6 +256,7 @@ object MainForm: TMainForm
       #1069#1083#1077#1084#1077#1085#1090#1099' '#1087#1086#1089#1083#1077#1076#1086#1074#1072#1090#1077#1083#1100#1085#1086#1089#1090#1080)
     View3D = False
     Align = alClient
+    TabStop = False
     AutoSize = True
     TabOrder = 2
     ExplicitWidth = 412
