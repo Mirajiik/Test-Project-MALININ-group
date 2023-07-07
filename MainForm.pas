@@ -27,11 +27,13 @@ type
     BtnReverseQuickSortSeq: TButton;
     BtnReverseHeapSortSeq: TButton;
     seLengthSeq: TSpinEdit;
+    BtnStopSort: TButton;
     procedure seLengthSeqChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnGenerateSeqClick(Sender: TObject);
     procedure BtnQuickSortSeqClick(Sender: TObject);
     procedure BtnHeapSortSeqClick(Sender: TObject);
+    procedure BtnStopSortClick(Sender: TObject);
   private
     FLengthSeq: Integer;
     FQSTimeRun: Integer;
@@ -62,10 +64,6 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FLengthSeq := 0;
   LengthSeq := 1;
-  BtnQuickSortSeq.Enabled := False;
-  BtnHeapSortSeq.Enabled := False;
-  BtnReverseQuickSortSeq.Enabled := False;
-  BtnReverseHeapSortSeq.Enabled := False;
   Series1.Clear;
 end;
 
@@ -108,6 +106,11 @@ procedure TMainForm.BtnQuickSortSeqClick(Sender: TObject);
 begin
   SortThread := TQuickSort.Create(NumSeq, 0, High(NumSeq), (Sender as TButton).Tag = 1);
   SortThread.Start;
+end;
+
+procedure TMainForm.BtnStopSortClick(Sender: TObject);
+begin
+  SortThread.Terminate;
 end;
 
 procedure TMainForm.BtnHeapSortSeqClick(Sender: TObject);

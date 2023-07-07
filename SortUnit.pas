@@ -59,6 +59,7 @@ begin
       (frmMain.Components[i] as TButton).Enabled := False;
     end;
   end;
+  frmMain.BtnStopSort.Enabled := True;
   FStopWatch.Start;
   Sort;
   FStopWatch.Stop;
@@ -69,6 +70,7 @@ begin
       (frmMain.Components[i] as TButton).Enabled := True;
     end;
   end;
+  frmMain.BtnStopSort.Enabled := False;
 end;
 
 { TQuickSort }
@@ -88,6 +90,7 @@ procedure TQuickSort.Sort;
     i:=min; j:=max;
     while i<j do
       begin
+        if Terminated then Exit;
         if FReverse then
         begin
           while FArray[i]>supp do
@@ -171,11 +174,13 @@ begin
   for i := FMax div 2 downto FMin do
   begin
     SiftDown(i, Length(FArray));
+    if Terminated then Exit;
   end;
   for i := FMax downto FMin + 1 do
   begin
     Swap(FArray[i], FArray[0]);
     SiftDown(0, i);
+    if Terminated then Exit;
     frmMain.ProgressPSort := (FMax - i) / (FMax - FMin + 1) * 100;
   end;
   frmMain.HSTimeRun := FStopWatch.ElapsedMilliseconds;

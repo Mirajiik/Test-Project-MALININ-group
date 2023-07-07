@@ -78,6 +78,23 @@ object MainForm: TMainForm
         Value = 1
         OnChange = seLengthSeqChange
       end
+      object BtnStopSort: TButton
+        Left = 18
+        Top = 119
+        Width = 140
+        Height = 38
+        Caption = #1054#1089#1090#1072#1085#1086#1074#1080#1090#1100' '#1089#1086#1088#1090#1080#1088#1086#1074#1082#1091
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+        WordWrap = True
+        OnClick = BtnStopSortClick
+      end
     end
     object GBToolBarBubbleSort: TGroupBox
       Left = 417
@@ -115,6 +132,7 @@ object MainForm: TMainForm
         Width = 140
         Height = 52
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1086#1079#1088#1072#1089#1090#1072#1085#1080#1102
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -132,6 +150,7 @@ object MainForm: TMainForm
         Width = 140
         Height = 52
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1073#1099#1074#1072#1085#1080#1102
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -179,6 +198,7 @@ object MainForm: TMainForm
         Width = 140
         Height = 52
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1086#1079#1088#1072#1089#1090#1072#1085#1080#1102
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -196,6 +216,7 @@ object MainForm: TMainForm
         Width = 140
         Height = 52
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1073#1099#1074#1072#1085#1080#1102
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
